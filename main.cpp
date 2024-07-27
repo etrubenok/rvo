@@ -1,6 +1,6 @@
 #include <iostream>
-#include "copyable_buffer.h"
-#include "bad_copy_buffer.h"
+#include "include/copyable_buffer.h"
+#include "include/bad_copy_buffer.h"
 
 
 CopyableBuffer createCopyableBuffer(int size) {
@@ -17,7 +17,9 @@ int main() {
     std::cout << "Hello, World!" << std::endl;
     auto buf = createCopyableBuffer(1000);
     std::cout << "main: 'buf' size: " << buf.getSize() << " at address: " << &buf << std::endl;
-    auto buf_copied = buf;
+
+    // Explicit execution of copy constructor
+    auto buf_copied = CopyableBuffer{buf};
     std::cout << "main: 'buf_copied' size: " << buf_copied.getSize() << " at address: " << &buf_copied << std::endl;
 
     auto huge_buf = createCopyableBuffer(10000000);

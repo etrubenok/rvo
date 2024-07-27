@@ -8,7 +8,7 @@
 
 class CopyableBuffer {
 public:
-    CopyableBuffer(int size);
+    explicit CopyableBuffer(int size);
 
     // Copy constructor
     CopyableBuffer(const CopyableBuffer& other);
@@ -22,6 +22,7 @@ public:
 
     int operator[](int index) const;
 
+    [[nodiscard]]
     int getSize() const;
 
 private:

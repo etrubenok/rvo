@@ -2,7 +2,7 @@
 // Created by Eugene Trubenok on 14/7/2024.
 //
 
-#include "copyable_buffer.h"
+#include "include/copyable_buffer.h"
 #include <iostream>
 
 CopyableBuffer::CopyableBuffer(int size) : size(size) {
@@ -17,6 +17,8 @@ CopyableBuffer::CopyableBuffer(const CopyableBuffer& other) : size(other.size) {
 }
 
 CopyableBuffer& CopyableBuffer::operator=(const CopyableBuffer& other) {
+    // We assign _old_data_ptr for printing the previous address of _data for the demo purpose.
+    // cppcheck-suppress constVariablePointer
     auto _old_data_ptr = _data;
     if (this == &other) {
         return *this;
