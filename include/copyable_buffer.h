@@ -5,6 +5,9 @@
 #ifndef RTO_COPYABLEBUFFER_H
 #define RTO_COPYABLEBUFFER_H
 
+#ifdef UNIT_TEST
+#include <gtest/gtest.h>
+#endif
 
 class CopyableBuffer {
 public:
@@ -26,6 +29,10 @@ public:
     int getSize() const;
 
 private:
+#ifdef UNIT_TEST
+    // For testing purposes to access private members
+    FRIEND_TEST(CopyableBuffer, CopyableBuffer);
+#endif
     int* _data;
     int size;
 

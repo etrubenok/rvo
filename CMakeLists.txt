@@ -2,14 +2,20 @@ cmake_minimum_required(VERSION 3.28)
 project(rvo)
 
 set(CMAKE_CXX_STANDARD 23)
-set(CMAKE_CXX_STANDARD_REQUIRED True)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Export compile commands for Cppcheck
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address")
-#set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fsanitize=address")
-#set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -fsanitize=address")
+# GOOGLE TEST SETUP
+include(FetchContent)
+FetchContent_Declare(
+        googletest
+        URL https://github.com/google/googletest/archive/refs/tags/v1.15.0.zip
+)
+FetchContent_MakeAvailable(googletest)
+
+enable_testing()
 
 # Define the source files for Cppcheck to analyze
 set(SOURCE_FILES
@@ -22,7 +28,18 @@ set(SOURCE_FILES
 
 add_executable(rvo ${SOURCE_FILES})
 
+add_executable(rvo_test
+        include/copyable_buffer.h
+        include/bad_copy_buffer.h
+        bad_copy_buffer.cpp
+        bad_copy_buffer_test.cpp
+        copyable_buffer.cpp
+        copyable_buffer_test.cpp)
+target_compile_definitions(rvo_test PRIVATE UNIT_TEST)
+target_link_libraries(rvo_test GTest::gtest_main)
 
+include(GoogleTest)
+gtest_discover_tests(rvo_test)
 
 # Define the command to run Cppcheck
 add_custom_target(
