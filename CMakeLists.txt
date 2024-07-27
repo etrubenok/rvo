@@ -24,6 +24,8 @@ set(SOURCE_FILES
         bad_copy_buffer.cpp
         include/copyable_buffer.h
         include/bad_copy_buffer.h
+        string_holder.cpp
+        include/string_holder.h
 )
 
 add_executable(rvo ${SOURCE_FILES})
@@ -34,7 +36,8 @@ add_executable(rvo_test
         bad_copy_buffer.cpp
         bad_copy_buffer_test.cpp
         copyable_buffer.cpp
-        copyable_buffer_test.cpp)
+        copyable_buffer_test.cpp
+        string_holder_test.cpp)
 target_compile_definitions(rvo_test PRIVATE UNIT_TEST)
 target_link_libraries(rvo_test GTest::gtest_main)
 
